@@ -4,7 +4,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
-  "../images/*.{jpg,jpeg,png,webp,heic,JPG,JPEG,PNG,WEBP,HEIC}",
+  "../images/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}",
 );
 ---
 
@@ -16,34 +16,32 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
     <p class="eyebrow">For my favorite person</p>
     <h1>Happy Birthday, I love you!</h1>
     <p class="lede">
-      A little gallery of our moments and memories. I love the joy you bring
-      into my life every day.
+      A little gallery of our moments and memories. I love you so much and all
+      the joy you bring into my life every day.
     </p>
   </section>
 
   <section class="justified-gallery" aria-label="Birthday photo gallery">
     {
-      Object.entries(images)
-        .slice(0, 12)
-        .map(async ([_path, image], index) => {
-          const { default: imageData } = await image();
-          return (
-            <a
-              style={`--width: ${imageData.width}; --height: ${imageData.height};`}
-              href={imageData.src}
-              target="_blank"
-              data-fancybox="gallery"
-            >
-              <Image
-                format="webp"
-                src={imageData}
-                alt=""
-                height={400}
-                loading={index < 20 ? "eager" : "lazy"}
-              />
-            </a>
-          );
-        })
+      Object.entries(images).map(async ([_path, image], index) => {
+        const { default: imageData } = await image();
+        return (
+          <a
+            style={`--width: ${imageData.width}; --height: ${imageData.height};`}
+            href={imageData.src}
+            target="_blank"
+            data-fancybox="gallery"
+          >
+            <Image
+              format="webp"
+              src={imageData}
+              alt=""
+              height={400}
+              loading={index < 20 ? "eager" : "lazy"}
+            />
+          </a>
+        );
+      })
     }
   </section>
 </BaseLayout>
