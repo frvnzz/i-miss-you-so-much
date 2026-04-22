@@ -94,8 +94,17 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 
   :global(body) {
     background:
-      radial-gradient(circle at top, rgba(255, 214, 230, 0.9), transparent 38%),
-      linear-gradient(180deg, #fff7fb 0%, #fffdf8 55%, #fff8ef 100%);
+      radial-gradient(circle at 18% 8%, rgba(255, 214, 230, 0.86), transparent 38%),
+      radial-gradient(circle at 82% 22%, rgba(218, 186, 200, 0.2), transparent 48%),
+      linear-gradient(
+        180deg,
+        #fff7fb 0%,
+        #fff3f8 18%,
+        #f4e8de 42%,
+        #d7c6c4 64%,
+        #625463 82%,
+        #1e1a28 100%
+      );
     color: #24131d;
   }
 
