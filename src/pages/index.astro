@@ -9,30 +9,41 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 ---
 
 <BaseLayout
-  title="Astro Photo Grid"
-  description="A minimal, single-page photo gallery for Astro."
+  title="Happy Birthday, I love you!"
+  description="A small birthday gallery for a very special person."
 >
-  <section class="justified-gallery" id="photoswipe">
+  <section class="hero">
+    <p class="eyebrow">For my favorite person</p>
+    <h1>Happy Birthday, I love you!</h1>
+    <p class="lede">
+      A little gallery of moments and memories. The kind of joy you bring into
+      my life every day.
+    </p>
+  </section>
+
+  <section class="justified-gallery" aria-label="Birthday photo gallery">
     {
-      Object.entries(images).map(async ([_path, image], index) => {
-        const { default: imageData } = await image();
-        return (
-          <a
-            style={`--width: ${imageData.width}; --height: ${imageData.height};`}
-            href={imageData.src}
-            target="_blank"
-            data-fancybox="gallery"
-          >
-            <Image
-              format="webp"
-              src={imageData}
-              alt=""
-              height={400}
-              loading={index < 20 ? "eager" : "lazy"}
-            />
-          </a>
-        );
-      })
+      Object.entries(images)
+        .slice(0, 12)
+        .map(async ([_path, image], index) => {
+          const { default: imageData } = await image();
+          return (
+            <a
+              style={`--width: ${imageData.width}; --height: ${imageData.height};`}
+              href={imageData.src}
+              target="_blank"
+              data-fancybox="gallery"
+            >
+              <Image
+                format="webp"
+                src={imageData}
+                alt=""
+                height={400}
+                loading={index < 20 ? "eager" : "lazy"}
+              />
+            </a>
+          );
+        })
     }
   </section>
 </BaseLayout>
@@ -63,15 +74,55 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 </script>
 
 <style>
+  :global(body) {
+    background:
+      radial-gradient(circle at top, rgba(255, 214, 230, 0.9), transparent 38%),
+      linear-gradient(180deg, #fff7fb 0%, #fffdf8 55%, #fff8ef 100%);
+    color: #24131d;
+  }
+
+  .hero {
+    padding: clamp(2rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem) 1rem;
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #9d496d;
+  }
+
+  h1 {
+    max-width: 12ch;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+    font-weight: 900;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  }
+
+  .lede {
+    max-width: 36rem;
+    margin-top: 1.25rem;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    color: rgba(36, 19, 29, 0.84);
+  }
+
   .justified-gallery {
-    --padding: max(2.5vw, 12px);
-    --space: max(2.5vw, 12px);
-    --min-height: clamp(200px, 20vw, 400px);
+    --padding: clamp(1rem, 4vw, 2rem);
+    --space: clamp(0.75rem, 2vw, 1.1rem);
+    --min-height: clamp(160px, 16vw, 300px);
 
     padding: var(--padding);
     display: flex;
     flex-wrap: wrap;
     gap: var(--space);
+    max-width: 88rem;
+    margin: 0 auto;
 
     a {
       flex-grow: calc(var(--width) * (100000 / var(--height)));
@@ -79,7 +130,12 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       aspect-ratio: var(--width) / var(--height);
       overflow: hidden;
       opacity: 1;
-      transition: all 0.05s ease-in-out;
+      border-radius: 1rem;
+      box-shadow: 0 12px 30px rgba(44, 18, 32, 0.12);
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        opacity 0.18s ease;
     }
 
     a img {
@@ -90,12 +146,15 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
     }
 
     a:focus-visible {
-      outline: 3px solid var(--outline);
-      outline-offset: 2px;
-      transform: scale(1.05);
+      outline: 3px solid #9d496d;
+      outline-offset: 4px;
+      transform: translateY(-2px) scale(1.01);
       z-index: 1;
-      border-radius: 2px;
-      box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(44, 18, 32, 0.18);
     }
 
     a.hidden {
