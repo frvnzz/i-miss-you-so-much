@@ -4,7 +4,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
-  "../images/*.{jpg,jpeg,png,webp}",
+  "../images/*.{jpg,jpeg,png,webp,heic,JPG,JPEG,PNG,WEBP,HEIC}",
 );
 ---
 
@@ -16,8 +16,8 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
     <p class="eyebrow">For my favorite person</p>
     <h1>Happy Birthday, I love you!</h1>
     <p class="lede">
-      A little gallery of moments and memories. The kind of joy you bring into
-      my life every day.
+      A little gallery of our moments and memories. I love the joy you bring
+      into my life every day.
     </p>
   </section>
 
